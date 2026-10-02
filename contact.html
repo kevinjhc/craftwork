@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="assets/logo/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="assets/logo/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..600&display=swap">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script>document.documentElement.classList.add("js")</script>
+  <title>Contact, Craftwork</title>
+  <meta name="description" content="Start a project with Craftwork, a design-build studio in Philadelphia.">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header site-header--menu">
+    <button class="menu-toggle menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span class="menu-icon" aria-hidden="true"><i></i><i></i></span>
+      <span class="menu-word menu-word--closed">Menu</span>
+      <span class="menu-word menu-word--open">Close</span>
+    </button>
+    <a class="brand" href="index.html" aria-label="Craftwork Home, home page"></a>
+    <a class="btn-sq header-cta" href="contact.html"><span>Contact</span><svg viewBox="0 0 14 11" aria-hidden="true"><path d="M.6 0v6h12.5" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M9.6 2.6l3.4 3.4-3.4 3.4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></a>
+    <nav class="nav menu-panel" id="site-nav" aria-label="Primary">
+      <div class="menu-inner">
+        <div class="menu-links">
+          <a href="work.html" data-img="assets/img/2327-house/karenharmelin2026-4610t-1000.webp"><span class="menu-num">01</span>Work</a>
+          <a href="services.html" data-img="assets/img/2327-house/karenharmelin2026-4672t-1000.webp"><span class="menu-num">02</span>Services</a>
+          <a href="process.html" data-img="assets/img/hawthorne-house/09-dsc8550-1000.webp"><span class="menu-num">03</span>Process</a>
+          <a href="contact.html" aria-current="page" data-img="assets/img/live-edge-bed/craftwork-card1-0128-1000.webp"><span class="menu-num">04</span>Contact</a>
+        </div>
+        <div class="menu-media" aria-hidden="true"><img src="assets/img/2327-house/karenharmelin2026-4610t-1000.webp" alt=""></div>
+        <div class="menu-foot"><span>East Kensington, Philadelphia</span><a href="https://instagram.com/craftworkdesign" target="_blank" rel="noopener">Instagram</a></div>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="wrap grid page-head page-head--simple">
+      <h1 class="display">Contact</h1>
+      <p class="lede">Tell us a little about what you have in mind. We reply to every inquiry within a few business days.</p>
+    </section>
+
+    <section class="wrap grid contact">
+      <div class="contact-aside">
+        <dl>
+          <div><dt>Location</dt><dd>East Kensington, Philadelphia</dd></div>
+          <div><dt>Areas served</dt><dd>Philadelphia, surrounding towns and South Jersey</dd></div>
+          <div><dt>Follow</dt><dd><a href="https://instagram.com/craftworkdesign" target="_blank" rel="noopener">Instagram</a></dd></div>
+        </dl>
+      </div>
+
+      <!-- UI only for now. Wire to a form service before launch so the studio address stays private.
+           Placeholder recipient: hello@example.com -->
+      <form class="contact-form" data-inquiry novalidate>
+        <fieldset class="form-section">
+          <legend class="form-legend"><span><span class="label">01</span>About you</span></legend>
+          <div class="fields">
+            <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" autocomplete="name" required></div>
+            <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+            <div class="field"><label for="f-phone">Phone <span class="muted">(optional)</span></label><input id="f-phone" name="phone" type="tel" autocomplete="tel"></div>
+            <div class="field"><label for="f-loc">Project location</label><input id="f-loc" name="location" placeholder="Neighborhood or town"></div>
+          </div>
+        </fieldset>
+
+        <fieldset class="form-section">
+          <legend class="form-legend"><span><span class="label">02</span>What are you planning?</span><span class="form-hint">Select all that apply</span></legend>
+          <div class="services-pick">
+            <div class="svc">
+              <label class="svc-head">
+                <input type="checkbox" name="services" value="new-construction">
+                <span class="svc-name">New construction / General contracting</span>
+                <span class="svc-hint">Ground-up homes, GC</span>
+              </label>
+              <div class="svc-budget"><div>
+                <div class="field">
+                  <label for="budget-new-construction">Estimated budget</label>
+                  <select id="budget-new-construction" aria-label="Estimated budget for new construction / general contracting" name="budget-new-construction">
+                    <option value="" selected disabled>Select a range</option>
+                    <option>$500k – $1M</option><option>$1M – $2M</option><option>$2M+</option>
+                    <option>Not sure yet</option>
+                  </select>
+                </div>
+              </div></div>
+            </div>
+            <div class="svc">
+              <label class="svc-head">
+                <input type="checkbox" name="services" value="renovation">
+                <span class="svc-name">Home renovation</span>
+                <span class="svc-hint">Whole-house, multi-room</span>
+              </label>
+              <div class="svc-budget"><div>
+                <div class="field">
+                  <label for="budget-renovation">Estimated budget</label>
+                  <select id="budget-renovation" aria-label="Estimated budget for home renovation" name="budget-renovation">
+                    <option value="" selected disabled>Select a range</option>
+                    <option>$100k – $250k</option><option>$250k – $500k</option><option>$500k – $1M</option><option>$1M+</option>
+                    <option>Not sure yet</option>
+                  </select>
+                </div>
+              </div></div>
+            </div>
+            <div class="svc">
+              <label class="svc-head">
+                <input type="checkbox" name="services" value="kitchens-baths">
+                <span class="svc-name">Kitchen or bath</span>
+                <span class="svc-hint">Single or multiple rooms</span>
+              </label>
+              <div class="svc-budget"><div>
+                <div class="field">
+                  <label for="budget-kitchens-baths">Estimated budget</label>
+                  <select id="budget-kitchens-baths" aria-label="Estimated budget for kitchen or bath" name="budget-kitchens-baths">
+                    <option value="" selected disabled>Select a range</option>
+                    <option>$50k – $100k</option><option>$100k – $200k</option><option>$200k+</option>
+                    <option>Not sure yet</option>
+                  </select>
+                </div>
+              </div></div>
+            </div>
+            <div class="svc">
+              <label class="svc-head">
+                <input type="checkbox" name="services" value="built-ins">
+                <span class="svc-name">Cabinetry &amp; built-ins</span>
+                <span class="svc-hint">Libraries, storage, millwork</span>
+              </label>
+              <div class="svc-budget"><div>
+                <div class="field">
+                  <label for="budget-built-ins">Estimated budget</label>
+                  <select id="budget-built-ins" aria-label="Estimated budget for cabinetry &amp; built-ins" name="budget-built-ins">
+                    <option value="" selected disabled>Select a range</option>
+                    <option>$25k – $75k</option><option>$75k – $150k</option><option>$150k+</option>
+                    <option>Not sure yet</option>
+                  </select>
+                </div>
+              </div></div>
+            </div>
+            <div class="svc">
+              <label class="svc-head">
+                <input type="checkbox" name="services" value="furniture">
+                <span class="svc-name">Custom furniture</span>
+                <span class="svc-hint">Commissioned pieces</span>
+              </label>
+              <div class="svc-budget"><div>
+                <div class="field">
+                  <label for="budget-furniture">Estimated budget</label>
+                  <select id="budget-furniture" aria-label="Estimated budget for custom furniture" name="budget-furniture">
+                    <option value="" selected disabled>Select a range</option>
+                    <option>$5k – $15k</option><option>$15k – $40k</option><option>$40k+</option>
+                    <option>Not sure yet</option>
+                  </select>
+                </div>
+              </div></div>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="form-section">
+          <legend class="form-legend"><span><span class="label">03</span>Details</span></legend>
+          <div class="fields">
+            <div class="field">
+              <label for="f-timeline">Ideal start</label>
+              <select id="f-timeline" name="timeline">
+                <option value="" selected disabled>Select</option>
+                <option>Within 3 months</option><option>3–6 months</option><option>6–12 months</option><option>12+ months</option><option>Flexible</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="f-stage">Where are you in the process?</label>
+              <select id="f-stage" name="stage">
+                <option value="" selected disabled>Select</option>
+                <option>Just exploring</option><option>Have a property, need design</option><option>Have drawings, need a builder</option><option>Ready to commission a piece</option>
+              </select>
+            </div>
+            <div class="field span-2"><label for="f-msg">Tell us about the project</label><textarea id="f-msg" name="message" rows="5" placeholder="The space, what you'd like to change, anything you love"></textarea></div>
+            <div class="field span-2"><label for="f-ref">How did you hear about us? <span class="muted">(optional)</span></label><input id="f-ref" name="referral"></div>
+          </div>
+        </fieldset>
+
+        <div class="form-foot">
+          <button class="btn" type="submit">Send inquiry</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="grid footer-cols">
+      <div class="footer-about">
+        <a class="brand footer-logo" href="index.html" aria-label="Craftwork Home, home page"></a>
+        <p>Craftwork is a Philadelphia-based firm that works closely with clients to craft incredible living spaces. We build custom furniture and cabinets, design super ergonomic modern kitchens, and specialize in cast concrete countertops.</p>
+      </div>
+      <div>
+        <p class="label">Index</p>
+        <a href="work.html">Work</a>
+        <a href="services.html">Services</a>
+        <a href="process.html">Process</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div>
+        <p class="label">Location</p>
+        <span>East Kensington, Philadelphia</span>
+      </div>
+      <div>
+        <p class="label">Follow us</p>
+        <a href="https://instagram.com/craftworkdesign" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.houzz.com/pro/jayme-guokas" target="_blank" rel="noopener">Houzz</a>
+      </div>
+    </div>
+    <div class="footer-base muted">
+      <span>&copy; <span data-year>2026</span> Craftwork. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <script src="assets/js/projects.js"></script>
+  <script src="assets/js/site.js"></script>
+</body>
+</html>
