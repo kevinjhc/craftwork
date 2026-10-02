@@ -268,8 +268,8 @@ button { font: inherit; letter-spacing: inherit; color: inherit; }
 @media (max-width: 760px) {
   /* Smaller logo and button so all three fit around the centre. */
   .site-header--menu .brand { width: 112px; }
-  .header-cta { padding: 9px 12px; letter-spacing: 0.04em; }
-  .header-cta svg { display: none; }
+  /* Phones: Menu and the logo only; Contact is in the menu. */
+  .header-cta { display: none; }
   .site-header--menu .menu-btn .menu-word { display: none !important; }
 }
 
