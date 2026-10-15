@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Page not found | Craftwork Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&display=swap">
+  <!-- Self-contained: this page can be served at any depth, so it links no local files. -->
+  <style>
+    body { margin: 0; min-height: 100svh; display: grid; place-items: center; background: #f3f1ec; color: #1b1a18;
+           font-family: "Geist", Arial, sans-serif; text-align: center; padding: 24px; }
+    h1 { font-size: clamp(2.4rem, 6vw, 5rem); font-weight: 400; letter-spacing: -0.04em; margin: 0 0 16px; }
+    p { color: #76726a; font-size: 1.125rem; margin: 0 0 32px; }
+    a { display: inline-block; background: #1b1a18; color: #f3f1ec; text-decoration: none; padding: 16px 24px;
+        font-size: 0.9375rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Page not found</h1>
+    <p>The page you were looking for has moved or doesn't exist.</p>
+    <a id="home" href="/">Back to Craftwork</a>
+  </main>
+  <script>
+    // Staging lives under /craftwork/; the live site is at the domain root.
+    if (location.pathname.startsWith("/craftwork/")) document.getElementById("home").href = "/craftwork/";
+  </script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+# Craftwork Home
+
+> Craftwork is a design-build studio in East Kensington, Philadelphia, led by Jayme Guokas. One team designs, builds and makes: adaptive reuse, whole-house renovations, kitchens and baths, cabinetry and built-ins, and custom furniture made in its own shop. It serves Philadelphia, the surrounding towns and South Jersey.
+
+## Pages
+
+- [Home](https://craftworkhome.com/): who Craftwork is, featured projects and client reviews
+- [Work](https://craftworkhome.com/work.html): the full portfolio, filterable by category
+- [Services](https://craftworkhome.com/services.html): adaptive reuse and general contracting, renovation, kitchens and baths, built-ins, custom furniture, and ways to work together
+- [Process](https://craftworkhome.com/process.html): the five project stages and answers to common questions (cost, timing, permits, working with an architect)
+- [Contact](https://craftworkhome.com/contact.html): inquiry form with budget ranges per service
+
+## Details
+
+- Principal: Jayme Guokas
+- Location: East Kensington, Philadelphia, PA
+- Areas served: Philadelphia, surrounding towns and South Jersey
+- Instagram: https://instagram.com/craftworkdesign
+- Reviews: 5.0 on Houzz, https://www.houzz.com/pro/jayme-guokas

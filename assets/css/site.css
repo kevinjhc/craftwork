@@ -174,8 +174,7 @@ button { font: inherit; letter-spacing: inherit; color: inherit; }
 }
 
 /* The original stacked lockup, "home" under the wordmark. Sized so the
-   Craftwork part matches the old 132px wordmark. (craftwork-home-inline.svg
-   is the side-by-side version, if we go back to it.) */
+   Craftwork part matches the old 132px wordmark. */
 .brand {
   display: block;
   width: 136px; aspect-ratio: 920 / 200;
@@ -284,6 +283,10 @@ button { font: inherit; letter-spacing: inherit; color: inherit; }
 }
 .site-header--menu.menu-open .menu-panel { clip-path: inset(0); visibility: visible; transition: clip-path 0.8s cubic-bezier(0.77, 0, 0.18, 1), visibility 0s; opacity: 1; transform: none; }
 .site-header--menu.menu-open { background: transparent; border-bottom-color: transparent; color: var(--ink); }
+/* The scrolled header's backdrop blur would make it the containing block for
+   the fixed menu panel, squeezing the "full-screen" menu into the header bar.
+   Drop it while the menu is open. */
+.site-header.site-header--menu.menu-open { -webkit-backdrop-filter: none; backdrop-filter: none; }
 /* While open: above everything (including the cursor label). Page scroll is
    blocked in alt.js without hiding the scrollbar, so nothing shifts. */
 .site-header--menu.menu-open { z-index: 1000; }
@@ -729,6 +732,9 @@ html.menu-locked .cursor { display: none; }
 .gallery .row.solo figure { grid-column: 4 / span 6; }
 .gallery figure { margin: 0; background: var(--panel); }
 .gallery img { width: 100%; height: auto; }
+/* Piece heading inside a multi-piece portfolio (Custom Furniture). */
+.gallery .piece { display: grid; gap: 10px; max-width: 40em; padding-top: clamp(40px, 6vw, 96px); }
+.gallery .piece:first-child { padding-top: 0; }
 @media (max-width: 700px) {
   .gallery .row { grid-template-columns: 1fr; }
   .gallery .row.solo figure { grid-column: 1 / -1; }

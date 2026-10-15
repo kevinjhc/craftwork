@@ -1,23 +1,6 @@
 (() => {
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
-  const PROJECTS = window.PROJECTS || [];
-  const CATEGORIES = window.CATEGORIES || {};
-  const bySlug = Object.fromEntries(PROJECTS.map((p) => [p.slug, p]));
-
-  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-  const catNames = (p) => p.categories.map((c) => CATEGORIES[c]).join(", ");
-
-  function img(im, alt, sizes, eager = false) {
-    return `<img src="${im.src}" srcset="${im.srcset}" sizes="${sizes}" width="${im.w}" height="${im.h}" alt="${esc(alt)}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">`;
-  }
-
-  function card(p, ratio, sizes) {
-    return `<a class="card reveal" href="project.html?p=${p.slug}" data-cats="${p.categories.join(" ")}">
-      <div class="media media--${ratio}">${img(p.images[0], p.title, sizes)}</div>
-      <div class="card-meta"><span class="card-title">${esc(p.title)}</span><span class="muted">${esc(catNames(p).split(", ")[0])}, ${esc(p.year)}</span></div>
-    </a>`;
-  }
 
   /* ---------- Header ---------- */
   const header = $(".site-header");
@@ -271,38 +254,17 @@
     }, { passive: false });
   });
 
-  /* ---------- Home: selected work ---------- */
-  const selected = $("[data-selected]");
-  if (selected) {
-    // data-selected can name the three projects; otherwise the first three featured.
-    const picks = selected.dataset.selected ? selected.dataset.selected.split(",").map((s) => bySlug[s]).filter(Boolean) : PROJECTS.filter((p) => p.featured).slice(0, 3);
-    selected.innerHTML = picks
-      .map((p) => card(p, "43", "(max-width: 760px) 100vw, 50vw")).join("") +
-      `<a class="card card-all reveal" href="work.html">
-        <div class="media media--43"><span class="card-all-count">${PROJECTS.length} projects</span><span class="card-all-label">View all projects <span class="arrow">→</span></span></div>
-      </a>`;
-  }
-
   /* ---------- Work index ---------- */
+  // The grid, the index list and the filter options are plain HTML in
+  // work.html; this only filters and switches views.
   const grid = $("[data-work-grid]");
   if (grid) {
     const list = $("[data-work-list]");
     const filters = $("[data-filters]");
-    grid.innerHTML = PROJECTS.map((p) => card(p, "34", "(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw")).join("");
-    list.innerHTML = PROJECTS.map((p) => `<a href="project.html?p=${p.slug}" data-cats="${p.categories.join(" ")}">
-        <span class="thumb media">${img(p.images[0], "", "160px")}</span>
-        <span class="t">${esc(p.title)}</span><span class="c">${esc(catNames(p))}</span>
-        <span class="l">${esc(p.location)}</span><span class="y">${esc(p.year)}</span></a>`).join("");
-
-    // Category filter: a dropdown of checkboxes. Picking several shows
-    // projects in any of them; picking none shows everything.
-    const count = (c) => PROJECTS.filter((p) => p.categories.includes(c)).length;
     const toggle = $(".filter-toggle", filters);
     const panel = $(".filter-panel", filters);
     const summary = $(".filter-summary", filters);
-    panel.innerHTML = Object.entries(CATEGORIES).map(([k, v]) => `
-      <label class="filter-opt"><input type="checkbox" value="${k}"><span>${esc(v)}</span><span class="count">${count(k)}</span></label>`).join("") +
-      `<div class="filter-foot"><button type="button" class="link-arrow" data-clear>Clear</button></div>`;
+    const nameOf = (input) => input.nextElementSibling.textContent;
     const boxes = $$("input", panel);
 
     const apply = () => {
@@ -310,7 +272,7 @@
       $$("[data-cats]", grid).concat($$("[data-cats]", list)).forEach((el) => {
         el.hidden = on.length > 0 && !el.dataset.cats.split(" ").some((c) => on.includes(c));
       });
-      summary.textContent = !on.length ? "All" : on.length === 1 ? CATEGORIES[on[0]] : `${on.length} selected`;
+      summary.textContent = !on.length ? "All" : on.length === 1 ? nameOf(boxes.find((b) => b.checked)) : `${on.length} selected`;
       toggle.classList.toggle("is-filtered", on.length > 0);
       const url = new URL(location.href);
       on.length ? url.searchParams.set("c", on.join(",")) : url.searchParams.delete("c");
@@ -338,47 +300,9 @@
   }
 
   /* ---------- Project page ---------- */
-  const proj = $("[data-project]");
-  if (proj) {
-    const slug = new URLSearchParams(location.search).get("p");
-    const p = bySlug[slug] || PROJECTS[0];
-    document.title = `${p.title} — Craftwork`;
-    const fact = (k, v) => (v ? `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>` : "");
-    $("[data-project-head]").innerHTML = `
-      <a class="link-arrow link-back" href="work.html" data-back>All work</a>
-      <h1 class="display">${esc(p.title)}</h1>
-      <p class="lede summary">${esc(p.summary)}</p>
-      <dl class="project-facts">${fact("Location", p.location)}${fact("Year", p.year)}${fact("Scope", p.scope)}${fact("Photography", p.photographer)}</dl>`;
-
-    // Rhythm: landscapes run full width; consecutive portraits pair up.
-    const rows = [];
-    const portrait = (im) => im.h > im.w;
-    for (let i = 0; i < p.images.length; i++) {
-      const im = p.images[i];
-      if (portrait(im) && p.images[i + 1] && portrait(p.images[i + 1])) rows.push(["pair", im, p.images[++i]]);
-      else if (portrait(im)) rows.push(["solo", im]);
-      else if (!portrait(im) && p.images[i + 1] && !portrait(p.images[i + 1]) && rows.length % 3 === 2) rows.push(["pair", im, p.images[++i]]);
-      else rows.push(["full", im]);
-    }
-    const alt = `${p.title}, ${p.location}`;
-    $("[data-gallery]").innerHTML = rows.map(([kind, ...ims], r) => {
-      const sizes = kind === "full" ? "calc(100vw - 2 * var(--gutter))" : kind === "solo" ? "(max-width: 700px) 100vw, 50vw" : "(max-width: 700px) 100vw, 50vw";
-      return `<div class="row ${kind === "pair" ? "" : kind}${r ? " reveal" : ""}">${ims.map((im) => `<figure>${img(im, alt, sizes, r === 0)}</figure>`).join("")}</div>`;
-    }).join("");
-
-    // Coming from the Work page? Go back to it as it was (filters and all).
-    if (document.referrer.includes("/work.html")) $("[data-back]").href = document.referrer;
-
-    // Previous / next, wrapping around, with a thumbnail of each.
-    const i = PROJECTS.indexOf(p), n = PROJECTS.length;
-    const prev = PROJECTS[(i - 1 + n) % n], next = PROJECTS[(i + 1) % n];
-    const step = (q, dir) => `
-      <a class="pn pn-${dir}" href="project.html?p=${q.slug}">
-        <span class="pn-thumb">${img(q.images[0], "", "160px")}</span>
-        <span class="pn-text"><span class="pn-dir">${dir === "prev" ? "Previous" : "Next"}</span><span class="pn-title">${esc(q.title)}</span></span>
-      </a>`;
-    $("[data-project-nav]").innerHTML = step(prev, "prev") + step(next, "next");
-  }
+  // Coming from the Work page? Go back to it as it was (filters and all).
+  const back = $("[data-back]");
+  if (back && document.referrer.includes("/work.html")) back.href = document.referrer;
 
   /* ---------- Footer: keep the copyright year current ---------- */
   $$("[data-year]").forEach((el) => { el.textContent = new Date().getFullYear(); });
