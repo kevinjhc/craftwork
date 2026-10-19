@@ -53,3 +53,51 @@ so a normal reload always shows your latest edits.
 Canonical links, Open Graph tags, the sitemap and structured data (the JSON-LD
 `<script>` blocks in each `<head>`) use `https://craftworkhome.com`. If the domain
 changes, find-and-replace it across the repo.
+
+## Domain and email
+
+The domain is registered at GoDaddy, which also hosts its DNS (GoDaddy → Domain
+Portfolio → craftworkhome.com → DNS). Until launch, the `@` A records and the `www`
+CNAME still point at the old Squarespace site.
+
+### Email forwarding: ImprovMX
+
+Addresses at craftworkhome.com forward to personal Gmail inboxes through
+[ImprovMX](https://app.improvmx.com) (free plan: forwarding only, no mailbox). The
+ImprovMX account is Jayme's.
+
+| Address | Forwards to |
+|---|---|
+| `jayme@craftworkhome.com` | Jayme's Gmail |
+| `kevin@craftworkhome.com` | Kevin's Gmail (for testing) |
+| anything else (`*`) | Jayme's Gmail |
+
+It relies on these records in GoDaddy DNS. Don't remove them:
+
+```
+MX   @  10  mx1.improvmx.com
+MX   @  20  mx2.improvmx.com
+TXT  @      v=spf1 include:spf.improvmx.com ~all
+```
+
+- **Checking delivery:** ImprovMX → craftworkhome.com → Logs lists every message it
+  forwarded.
+- **Testing:** send from an address other than the one the alias forwards to. Gmail
+  silently drops a forwarded copy of mail you sent yourself, so a self-test looks lost.
+- **Replying as jayme@:** in Gmail, Settings → Accounts → "Send mail as", using
+  `smtp.gmail.com` with an app password, and choose "Reply from the same address the
+  message was sent to".
+
+### Contact form: Web3Forms
+
+The form on `contact.html` posts to [Web3Forms](https://app.web3forms.com) from
+`assets/js/site.js` (the "Contact form" block). Free plan: 250 submissions a month.
+
+- **Recipient:** set in the Web3Forms dashboard, not in code: the "Craftwork Home"
+  form → Settings → Email Configuration → Recipient Emails. It's Kevin's Gmail while
+  testing; switch it to `jayme@craftworkhome.com` at launch.
+- **Access key:** `ACCESS_KEY` in `site.js`. It's meant to be public.
+- **The email:** subject "New inquiry from {name}", one line per entry in `rows` in
+  `site.js`, and Reply goes to the visitor's address. Edit `rows` to change what's
+  included.
+- **Spam:** a hidden `botcheck` field; submissions that fill it are dropped.
