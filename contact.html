@@ -65,8 +65,7 @@
         </dl>
       </div>
 
-      <!-- UI only for now. Wire to a form service before launch so the studio address stays private.
-           Placeholder recipient: hello@example.com -->
+      <!-- Sent by FormSubmit.co; the recipient is INBOX in assets/js/site.js. -->
       <form class="contact-form" data-inquiry novalidate>
         <fieldset class="form-section">
           <legend class="form-legend"><span><span class="label">01</span>About you</span></legend>
@@ -195,6 +194,12 @@
         <div class="form-foot">
           <p class="form-status" role="status" aria-live="polite"></p>
           <button class="btn" type="submit">Send inquiry</button>
+        </div>
+
+        <div class="form-done" tabindex="-1" hidden>
+          <h2 class="form-done-title">Thanks — we got your inquiry.</h2>
+          <p class="form-done-body">We'll be in touch soon. We reply to every inquiry within a few business days.</p>
+          <button class="link-arrow form-again" type="button">Send another inquiry</button>
         </div>
       </form>
     </section>

@@ -1001,5 +1001,16 @@ fieldset.form-section > *:not(legend) { clear: both; }
 .btn:disabled { opacity: 0.5; cursor: progress; }
 .form-status { margin: 0 auto 0 0; color: var(--muted); }
 .form-status:empty { display: none; }
+.contact-form.is-sent > :not(.form-done) { display: none; }
+.form-done {
+  border-top: 1px solid var(--ink); padding-top: 36px;
+  scroll-margin-top: calc(var(--header-h) + 32px);
+  animation: page-in 0.7s var(--ease) both;
+}
+.form-done:focus { outline: none; }
+.form-done-title { margin: 0; font-size: var(--t-h2); font-weight: 400; line-height: 1.1; letter-spacing: -0.025em; max-width: 14ch; }
+.form-done-body { margin: 20px 0 32px; font-size: var(--t-large); line-height: 1.45; color: var(--muted); max-width: 34ch; }
+.form-again { background: none; border-top: 0; border-left: 0; border-right: 0; padding-inline: 0; font: inherit; color: inherit; cursor: pointer; }
+@media (prefers-reduced-motion: reduce) { .form-done { animation: none; } }
 .form-honey { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 .btn:hover { gap: 20px; background: #000; }

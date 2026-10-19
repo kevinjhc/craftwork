@@ -403,6 +403,13 @@
     const INBOX = "kevinjhc@gmail.com";
     const status = $(".form-status", form);
     const button = $("button[type=submit]", form);
+    const done = $(".form-done", form);
+    const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    $(".form-again", form).addEventListener("click", () => {
+      form.classList.remove("is-sent");
+      done.hidden = true;
+      $("#f-name", form).focus();
+    });
     const text = (sel) => {
       const el = $(sel, form);
       return (el.tagName === "SELECT" ? el.selectedOptions[0]?.textContent : el.value).trim();
@@ -454,7 +461,11 @@
         if (!res.ok || String(data.success) !== "true") throw new Error(data.message || res.status);
         form.reset();
         $$(".svc-head input", form).forEach(sync);
-        status.textContent = "Thanks — we got your inquiry and will be in touch soon.";
+        status.textContent = "";
+        form.classList.add("is-sent");
+        done.hidden = false;
+        done.focus({ preventScroll: true });
+        done.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
       } catch (err) {
         status.textContent = "Something went wrong sending that. Please try again in a moment.";
         console.error("Inquiry failed:", err);
