@@ -381,7 +381,7 @@
     update();
   }
 
-  /* ---------- Contact form (UI only) ---------- */
+  /* ---------- Contact form ---------- */
   const form = $("[data-inquiry]");
   if (form) {
     const sync = (box) => {
@@ -398,8 +398,70 @@
     const pre = new URLSearchParams(location.search).get("service");
     const preBox = pre && $(`.svc-head input[value="${CSS.escape(pre)}"]`, form);
     if (preBox) { preBox.checked = true; sync(preBox); }
-    // Not wired to a backend yet — keep the page from reloading.
-    form.addEventListener("submit", (e) => e.preventDefault());
+    // FormSubmit.co emails each inquiry as a table, one row per key below.
+    // Testing address for now; switch to jayme@craftworkhome.com at launch.
+    const INBOX = "kevinjhc@gmail.com";
+    const status = $(".form-status", form);
+    const button = $("button[type=submit]", form);
+    const text = (sel) => {
+      const el = $(sel, form);
+      return (el.tagName === "SELECT" ? el.selectedOptions[0]?.textContent : el.value).trim();
+    };
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+      if ($("[name=_honey]", form).value) return;
+
+      const services = $$(".svc", form)
+        .filter((svc) => $(".svc-head input", svc).checked)
+        .map((svc) => {
+          const sel = $("select", svc);
+          const budget = sel.value ? ` (${sel.selectedOptions[0].textContent})` : "";
+          return $(".svc-name", svc).textContent + budget;
+        });
+      const pick = (sel) => ($(sel, form).value ? text(sel) : "");
+      const name = text("#f-name");
+      const email = text("#f-email");
+      const rows = {
+        "Name": name,
+        "Email": email,
+        "Phone": text("#f-phone"),
+        "Project location": text("#f-loc"),
+        "Services and budget": services.join("\n"),
+        "Ideal start": pick("#f-timeline"),
+        "Stage": pick("#f-stage"),
+        "Project": text("#f-msg"),
+        "Heard about us": text("#f-ref"),
+      };
+      for (const k in rows) if (!rows[k]) rows[k] = "—";
+
+      button.disabled = true;
+      status.textContent = "Sending…";
+      try {
+        const res = await fetch(`https://formsubmit.co/ajax/${INBOX}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({
+            ...rows,
+            _subject: `New inquiry from ${name}`,
+            _replyto: email,
+            _template: "table",
+            _captcha: "false",
+          }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || String(data.success) !== "true") throw new Error(data.message || res.status);
+        form.reset();
+        $$(".svc-head input", form).forEach(sync);
+        status.textContent = "Thanks — we got your inquiry and will be in touch soon.";
+      } catch (err) {
+        status.textContent = "Something went wrong sending that. Please try again in a moment.";
+        console.error("Inquiry failed:", err);
+      } finally {
+        button.disabled = false;
+      }
+    });
   }
 
   /* ---------- Cursor-follow label ---------- */
