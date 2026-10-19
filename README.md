@@ -116,11 +116,11 @@ Page views are counted by [Cloudflare Web Analytics](https://dash.cloudflare.com
 Web analytics → craftworkhome.com. DNS stays at GoDaddy; Cloudflare only receives
 page-view beacons.
 
-Not installed yet: the Cloudflare account's email needs verifying first. Once it is,
-every page except `archive/` and `v1/` loads the beacon just before `</head>`:
+Every page except `archive/` and `v1/` has this just before `</head>`. It only loads
+the beacon on `craftworkhome.com`, so local previews aren't counted:
 
 ```html
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "…"}'></script>
+<!-- Cloudflare Web Analytics: live site only, so local previews aren't counted --><script>if (location.hostname === "craftworkhome.com") { const s = document.createElement("script"); s.src = "https://static.cloudflareinsights.com/beacon.min.js"; s.dataset.cfBeacon = '{"token": "95efc175faf7465f9f318ae6e1c417db"}'; document.head.append(s); }</script>
 ```
 
 The token is public. When you add a page, copy the line from an existing one.

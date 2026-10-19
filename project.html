@@ -10,6 +10,7 @@
     const slug = new URLSearchParams(location.search).get("p");
     location.replace(slug && /^[a-z0-9-]+$/.test(slug) ? `work/${slug === "2327-house" ? "carriage-house" : slug}.html` : "work.html");
   </script>
+  <!-- Cloudflare Web Analytics: live site only, so local previews aren't counted --><script>if (location.hostname === "craftworkhome.com") { const s = document.createElement("script"); s.src = "https://static.cloudflareinsights.com/beacon.min.js"; s.dataset.cfBeacon = '{"token": "95efc175faf7465f9f318ae6e1c417db"}'; document.head.append(s); }</script>
 </head>
 <body>
   <p><a href="work.html">See all projects</a></p>
