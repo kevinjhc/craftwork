@@ -398,9 +398,9 @@
     const pre = new URLSearchParams(location.search).get("service");
     const preBox = pre && $(`.svc-head input[value="${CSS.escape(pre)}"]`, form);
     if (preBox) { preBox.checked = true; sync(preBox); }
-    // FormSubmit.co emails each inquiry as a table, one row per key below.
-    // Testing address for now; switch to jayme@craftworkhome.com at launch.
-    const INBOX = "kevinjhc@gmail.com";
+    // Web3Forms emails each inquiry, one line per key below. The key is meant to be
+    // public; the recipient is set in the Web3Forms dashboard ("Craftwork Home" form).
+    const ACCESS_KEY = "6b9f3f1b-1009-48da-b5f5-7033b0821b06";
     const status = $(".form-status", form);
     const button = $("button[type=submit]", form);
     const done = $(".form-done", form);
@@ -418,7 +418,7 @@
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       if (!form.reportValidity()) return;
-      if ($("[name=_honey]", form).value) return;
+      if ($("[name=botcheck]", form).value) return;
 
       const services = $$(".svc", form)
         .filter((svc) => $(".svc-head input", svc).checked)
@@ -445,16 +445,18 @@
 
       button.disabled = true;
       status.textContent = "Sending…";
+      const slow = setTimeout(() => { status.textContent = "Still sending…"; }, 5000);
       try {
-        const res = await fetch(`https://formsubmit.co/ajax/${INBOX}`, {
+        const res = await fetch("https://api.web3forms.com/submit", {
           method: "POST",
+          signal: AbortSignal.timeout(30000),
           headers: { "Content-Type": "application/json", Accept: "application/json" },
           body: JSON.stringify({
+            access_key: ACCESS_KEY,
+            subject: `New inquiry from ${name}`,
+            from_name: "Craftwork website",
+            replyto: email,
             ...rows,
-            _subject: `New inquiry from ${name}`,
-            _replyto: email,
-            _template: "table",
-            _captcha: "false",
           }),
         });
         const data = await res.json().catch(() => ({}));
@@ -470,6 +472,7 @@
         status.textContent = "Something went wrong sending that. Please try again in a moment.";
         console.error("Inquiry failed:", err);
       } finally {
+        clearTimeout(slow);
         button.disabled = false;
       }
     });
