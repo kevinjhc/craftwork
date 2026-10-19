@@ -57,8 +57,16 @@ changes, find-and-replace it across the repo.
 ## Domain and email
 
 The domain is registered at GoDaddy, which also hosts its DNS (GoDaddy → Domain
-Portfolio → craftworkhome.com → DNS). Until launch, the `@` A records and the `www`
-CNAME still point at the old Squarespace site.
+Portfolio → craftworkhome.com → DNS). GitHub Pages serves the site: the `CNAME` file
+holds the domain, and these records point at GitHub:
+
+```
+A      @    185.199.108.153
+A      @    185.199.109.153
+A      @    185.199.110.153
+A      @    185.199.111.153
+CNAME  www  kevinjhc.github.io
+```
 
 ### Email forwarding: ImprovMX
 
@@ -69,7 +77,6 @@ ImprovMX account is Jayme's.
 | Address | Forwards to |
 |---|---|
 | `jayme@craftworkhome.com` | Jayme's Gmail |
-| `kevin@craftworkhome.com` | Kevin's Gmail (for testing) |
 | anything else (`*`) | Jayme's Gmail |
 
 It relies on these records in GoDaddy DNS. Don't remove them:
@@ -94,10 +101,26 @@ The form on `contact.html` posts to [Web3Forms](https://app.web3forms.com) from
 `assets/js/site.js` (the "Contact form" block). Free plan: 250 submissions a month.
 
 - **Recipient:** set in the Web3Forms dashboard, not in code: the "Craftwork Home"
-  form → Settings → Email Configuration → Recipient Emails. It's Kevin's Gmail while
-  testing; switch it to `jayme@craftworkhome.com` at launch.
+  form → Settings → Email Configuration → Recipient Emails (add the address under
+  Linked Emails first).
 - **Access key:** `ACCESS_KEY` in `site.js`. It's meant to be public.
 - **The email:** subject "New inquiry from {name}", one line per entry in `rows` in
   `site.js`, and Reply goes to the visitor's address. Edit `rows` to change what's
   included.
 - **Spam:** a hidden `botcheck` field; submissions that fill it are dropped.
+
+### Analytics: Cloudflare Web Analytics
+
+Page views are counted by [Cloudflare Web Analytics](https://dash.cloudflare.com)
+(free, no cookies, so no consent banner). The Cloudflare account is Jayme's: Analytics →
+Web analytics → craftworkhome.com. DNS stays at GoDaddy; Cloudflare only receives
+page-view beacons.
+
+Not installed yet: the Cloudflare account's email needs verifying first. Once it is,
+every page except `archive/` and `v1/` loads the beacon just before `</head>`:
+
+```html
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "…"}'></script>
+```
+
+The token is public. When you add a page, copy the line from an existing one.
