@@ -173,6 +173,32 @@ button { font: inherit; letter-spacing: inherit; color: inherit; }
   border-bottom-color: transparent;
 }
 
+/* The header starts larger at the top of the page and eases down to its
+   usual size once it turns solid: past the hero on the home page, after
+   the first few pixels of scroll elsewhere. */
+.site-header--menu {
+  transition: background-color 0.4s var(--ease), color 0.4s var(--ease), border-color 0.4s var(--ease), height 0.5s var(--ease);
+}
+.site-header--menu .brand,
+.site-header--menu .menu-btn,
+.site-header--menu .header-cta { transition: width 0.5s var(--ease), font-size 0.5s var(--ease), padding 0.5s var(--ease), background-color 0.3s, color 0.3s; }
+.site-header--menu:not(.is-solid) { height: 108px; }
+.site-header--menu:not(.is-solid) .brand { width: 208px; }
+.site-header--menu:not(.is-solid) .menu-btn { font-size: var(--t-large); }
+.site-header--menu:not(.is-solid) .header-cta { padding: 16px 24px; }
+@media (max-width: 760px) {
+  .site-header--menu:not(.is-solid) { height: 84px; }
+  .site-header--menu:not(.is-solid) .brand { width: 148px; }
+}
+/* Over the hero, a scrim lifts the logo off bright photos and fades out
+   with the large state. */
+.site-header.is-over::before {
+  content: ""; position: absolute; inset: 0 0 auto 0; height: 220%; z-index: -1; pointer-events: none;
+  background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.28) 45%, rgba(0,0,0,0) 100%);
+  opacity: 0; transition: opacity 0.5s var(--ease);
+}
+.site-header.is-over:not(.is-solid):not(.menu-open)::before { opacity: 1; }
+
 /* The original stacked lockup, "home" under the wordmark. Sized so the
    Craftwork part matches the old 132px wordmark. */
 .brand {
